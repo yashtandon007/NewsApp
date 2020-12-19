@@ -36,25 +36,27 @@ class ViewPagerFragment : Fragment() {
 
     class DemoCollectionPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
-        override fun getCount(): Int  = 8
+        override fun getCount(): Int = 8
 
         override fun getItem(i: Int): Fragment {
-            return when(i){
-                0-> HomeFragment()
-                2-> HomeFragment()
-                else -> HomeFragment()
-            }
+            var str = getPageTitle(i).toString().toLowerCase()
+            var homeFragment = HomeFragment()
+            var bundle = Bundle()
+            bundle.putString("query", str)
+            homeFragment.arguments = bundle
+            return homeFragment
         }
 
         override fun getPageTitle(position: Int): CharSequence {
-            return when(position){
-                1->"WORLD"
-                2->"SCIENCE"
-                3->"SPORT"
-                4->"ENVIRONMENT"
-                5->"SOCIETY"
-                6->"FASHION"
-                7->"BUSINESS"
+            return when (position) {
+                0 -> "HOME"
+                1 -> "WORLD"
+                2 -> "SCIENCE"
+                3 -> "SPORT"
+                4 -> "ENVIRONMENT"
+                5 -> "SOCIETY"
+                6 -> "FASHION"
+                7 -> "BUSINESS"
                 else -> "HOME"
             }
         }

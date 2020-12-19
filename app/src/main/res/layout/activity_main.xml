@@ -9,26 +9,31 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                style="@style/Widget.MaterialComponents.Toolbar.Primary"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="@string/app_name" />
 
-            <fragment
-                android:id="@+id/nav_host"
-                android:name="androidx.navigation.fragment.NavHostFragment"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                app:defaultNavHost="true"
-                app:navGraph="@navigation/nav_graph" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:title="@string/app_name" />
+
+                <fragment
+                    android:id="@+id/nav_host"
+                    android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:defaultNavHost="true"
+                    app:navGraph="@navigation/nav_graph" />
+            </LinearLayout>
 
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_nav"
@@ -38,8 +43,10 @@
                 app:itemBackground="?attr/colorSurface"
                 app:itemIconTint="@drawable/bottom_nav_item_background"
                 app:itemTextColor="@drawable/bottom_nav_item_background"
+                app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
                 app:menu="@menu/menu_bottom_nav" />
-        </LinearLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"

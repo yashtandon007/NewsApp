@@ -6,28 +6,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ProgressBar
 import androidx.databinding.adapters.SeekBarBindingAdapter.setProgress
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.example.newsapp.databinding.FragmentNewsDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_news_detail.*
-
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NewsDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 
 @AndroidEntryPoint
 class NewsDetailFragment : Fragment() {
@@ -45,21 +35,25 @@ class NewsDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        my_toolbar.setNavigationOnClickListener(View.OnClickListener {
-//            activity!!.onBackPressed() })
         webview.getSettings().setJavaScriptEnabled(true);
-        webview.webChromeClient = object : WebChromeClient() {
-            override fun onProgressChanged(view: WebView, progress: Int) {
+        webview.webChromeClient = MyWebChormeCl(webview,pbar)
+        webview.setWebViewClient(MyCustomWebViewClient());
+        //webview.webChromeClient = WebChromeClient()
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.loadUrl(args.data.webUrl);
 
-                // Return the app name after finish loading
-                if (progress == 100) {
-                    pbar.visibility=View.GONE
-                }
+
+    }
+
+    class MyWebChormeCl(val webview:WebView,val pbar:ProgressBar) : WebChromeClient(){
+        override fun onProgressChanged(view: WebView?, newProgress: Int) {
+            super.onProgressChanged(view, newProgress)
+            println("yash tandon progress  "+newProgress)
+            if (newProgress >22) {
+                webview.visibility = VISIBLE
+                pbar.visibility=View.GONE
             }
         }
-        webview.setWebViewClient(MyCustomWebViewClient());
-        webview.loadUrl(args.data.webUrl);
-        webview.webChromeClient = WebChromeClient()
     }
 }
 
@@ -74,6 +68,10 @@ class NewsDetailFragment : Fragment() {
 //    }
 //}
 internal class MyCustomWebViewClient : WebViewClient() {
+
+
+
+
     override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
         return if (Uri.parse(url).getHost()?.endsWith(url) == true) {
             true

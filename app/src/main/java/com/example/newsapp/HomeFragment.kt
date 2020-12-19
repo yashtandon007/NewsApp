@@ -45,21 +45,12 @@ class HomeFragment : Fragment() {
         val connectingAnimation: Animation =
             AnimationUtils.loadAnimation(context, R.anim.scale_image)
 
+
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
         rv_news.layoutManager = LinearLayoutManager(context)
         rv_news.adapter = adapterNews
-        viewModel.getNewsList().observe(viewLifecycleOwner, {
-            GlobalScope.launch {
-                adapterNews.submitData(it)
-            }
-        })
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            adapterNews.loadStateFlow.collectLatest { loadStates ->
-                pbar_center.isVisible = loadStates.refresh is LoadState.Loading
-                pbar_bottom.isVisible = loadStates.append is LoadState.Loading
-            }
-        }
+        loadData()
         val snapHelper: SnapHelper = object :LinearSnapHelper(){
             var iv_Previous: ImageView?=null
             override fun findSnapView(layoutManager: RecyclerView.LayoutManager?): View? {
@@ -79,6 +70,26 @@ class HomeFragment : Fragment() {
             }
         }
         snapHelper.attachToRecyclerView(rv_news);
+        viewLifecycleOwner.lifecycleScope.launch {
+            adapterNews.loadStateFlow.collectLatest { loadStates ->
+                pbar_center.isVisible = loadStates.refresh is LoadState.Loading
+                pbar_bottom.isVisible = loadStates.append is LoadState.Loading
+            }
+        }
+        swiperefresh.setOnRefreshListener {
+            loadData()
+        }
+    }
+
+    private fun loadData() {
+        arguments?.getString("query")?.let {
+            viewModel.getNewsList(it).observe(viewLifecycleOwner, {
+                GlobalScope.launch {
+                    adapterNews.submitData(it)
+                }
+            })
+        }
+        swiperefresh.isRefreshing = false
     }
 
 }
