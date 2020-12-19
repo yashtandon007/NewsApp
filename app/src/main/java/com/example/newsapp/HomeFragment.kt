@@ -4,6 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.FrameLayout
+import android.widget.ImageView
+import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -37,9 +42,11 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val connectingAnimation: Animation =
+            AnimationUtils.loadAnimation(context, R.anim.scale_image)
+
         viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        var layoutManager = LinearLayoutManager(context)
-        rv_news.layoutManager = layoutManager
+        rv_news.layoutManager = LinearLayoutManager(context)
         rv_news.adapter = adapterNews
         viewModel.getNewsList().observe(viewLifecycleOwner, {
             GlobalScope.launch {
@@ -54,18 +61,21 @@ class HomeFragment : Fragment() {
             }
         }
         val snapHelper: SnapHelper = object :LinearSnapHelper(){
+            var iv_Previous: ImageView?=null
             override fun findSnapView(layoutManager: RecyclerView.LayoutManager?): View? {
-                return super.findSnapView(layoutManager)
-
-            }
-
-            override fun findTargetSnapPosition(
-                layoutManager: RecyclerView.LayoutManager?,
-                velocityX: Int,
-                velocityY: Int
-            ): Int {
-                return super.findTargetSnapPosition(layoutManager, velocityX, velocityY)
-
+                var root = super.findSnapView(layoutManager)
+                root?.let {
+                    var cardView  = root as CardView
+                    var frameLayout = cardView.getChildAt(0) as FrameLayout
+                    var imageview = frameLayout.getChildAt(0) as ImageView
+                    iv_Previous?.let{
+                        it.clearAnimation()
+                        connectingAnimation.cancel()
+                    }
+                    imageview.startAnimation(connectingAnimation);
+                    iv_Previous = imageview
+                }
+                return root
             }
         }
         snapHelper.attachToRecyclerView(rv_news);
