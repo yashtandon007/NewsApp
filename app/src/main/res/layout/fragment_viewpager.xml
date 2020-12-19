@@ -1,0 +1,26 @@
+<!-- activity_screen_slide.xml -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+ <FrameLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent">
+     <androidx.viewpager.widget.ViewPager
+         android:id="@+id/mypager"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent" >
+         <com.google.android.material.tabs.TabLayout
+             android:id="@+id/tab_layout"
+             app:tabGravity="center"
+             app:tabMode="scrollable"
+             app:tabBackground="@color/primary"
+             app:tabSelectedTextColor="@color/colorAccent"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content" />
+     </androidx.viewpager.widget.ViewPager>
+ </FrameLayout>
+</layout>
