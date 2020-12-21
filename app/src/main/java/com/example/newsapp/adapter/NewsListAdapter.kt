@@ -66,13 +66,14 @@ class NewsListAdapter() : PagingDataAdapter<NewsItem, NewsListAdapter.NewsItemHo
                 )
             )
             holder.cardView.setOnClickListener {
-//                val newsUri: Uri = Uri.parse(currentNews.webUrl)
-//                val ii = Intent(holder.cardView.context, WebviewLoad::class.java)
-//                ii.putExtra("news", newsUri.toString())
-//                holder.cardView.context.startActivity(ii)
-                holder.cardView.findNavController().navigate(ViewPagerFragmentDirections.actionViewPagerFragmentToNewsDetailFragment(
-                    currentNews
+                holder.cardView.findNavController().navigate(ViewPagerFragmentDirections.actionViewPagerFragmentToTestFragment(
+
                 ))
+//                holder.cardView.findNavController().navigate(ViewPagerFragmentDirections.actionViewPagerFragmentToNewsdetail(
+//                    currentNews
+//                ))
+
+
             }
             if (currentNews.fields.thumbnail == null) {
                 holder.ivImage.setVisibility(GONE)

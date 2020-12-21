@@ -29,7 +29,6 @@ class ViewPagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         demoCollectionPagerAdapter = DemoCollectionPagerAdapter(childFragmentManager)
-        // val mypager:ViewPager = view.findViewById(R.id.mypager)
         mypager.adapter = demoCollectionPagerAdapter
         tab_layout.setupWithViewPager(mypager)
     }

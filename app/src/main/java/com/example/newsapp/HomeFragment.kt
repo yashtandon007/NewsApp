@@ -11,6 +11,8 @@ import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
@@ -30,7 +32,7 @@ import kotlinx.coroutines.launch
 class HomeFragment : Fragment() {
 
 
-    private lateinit var viewModel: HomeViewModel
+    private val viewModel: HomeViewModel by viewModels()
     private var adapterNews = NewsListAdapter()
 
     override fun onCreateView(
@@ -42,37 +44,16 @@ class HomeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val connectingAnimation: Animation =
-            AnimationUtils.loadAnimation(context, R.anim.scale_image)
 
 
-        viewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
+
         rv_news.layoutManager = LinearLayoutManager(context)
         rv_news.adapter = adapterNews
-
         loadData()
-        val snapHelper: SnapHelper = object :LinearSnapHelper(){
-            var iv_Previous: ImageView?=null
-            override fun findSnapView(layoutManager: RecyclerView.LayoutManager?): View? {
-                var root = super.findSnapView(layoutManager)
-                root?.let {
-                    var cardView  = root as CardView
-                    var frameLayout = cardView.getChildAt(0) as FrameLayout
-                    var imageview = frameLayout.getChildAt(0) as ImageView
-                    iv_Previous?.let{
-                        it.clearAnimation()
-                        connectingAnimation.cancel()
-                    }
-                    imageview.startAnimation(connectingAnimation);
-                    iv_Previous = imageview
-                }
-                return root
-            }
-        }
-        snapHelper.attachToRecyclerView(rv_news);
+        animateCenterItem()
         viewLifecycleOwner.lifecycleScope.launch {
             adapterNews.loadStateFlow.collectLatest { loadStates ->
-                pbar_center.isVisible = loadStates.refresh is LoadState.Loading
+                pbar_center.isVisible = loadStates.prepend is LoadState.Loading
                 pbar_bottom.isVisible = loadStates.append is LoadState.Loading
             }
         }
@@ -81,9 +62,33 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun animateCenterItem() {
+        val connectingAnimation: Animation =
+            AnimationUtils.loadAnimation(context, R.anim.scale_image)
+        val snapHelper: SnapHelper = object : LinearSnapHelper() {
+            var iv_Previous: ImageView? = null
+            override fun findSnapView(layoutManager: RecyclerView.LayoutManager?): View? {
+                var root = super.findSnapView(layoutManager)
+                root?.let {
+                    var cardView = root as CardView
+                    var frameLayout = cardView.getChildAt(0) as FrameLayout
+                    var imageview = frameLayout.getChildAt(0) as ImageView
+                    iv_Previous?.let {
+                        it.clearAnimation()
+                        connectingAnimation.cancel()
+                    }
+                    imageview.startAnimation(connectingAnimation);
+                    iv_Previous = imageview
+                }
+                return null
+            }
+        }
+        snapHelper.attachToRecyclerView(rv_news);
+    }
+
     private fun loadData() {
         arguments?.getString("query")?.let {
-            viewModel.getNewsList(it).observe(viewLifecycleOwner, {
+            viewModel.myList.observe(viewLifecycleOwner, Observer {
                 GlobalScope.launch {
                     adapterNews.submitData(it)
                 }

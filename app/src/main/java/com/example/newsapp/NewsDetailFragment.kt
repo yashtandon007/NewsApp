@@ -14,9 +14,13 @@ import android.webkit.WebViewClient
 import android.widget.ProgressBar
 import androidx.databinding.adapters.SeekBarBindingAdapter.setProgress
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.plusAssign
 import com.example.newsapp.databinding.FragmentNewsDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_news_detail.*
 
 @AndroidEntryPoint
@@ -33,18 +37,19 @@ class NewsDetailFragment : Fragment() {
         return FragmentNewsDetailBinding.inflate(LayoutInflater.from(context),container,false).root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        webview.getSettings().setJavaScriptEnabled(true);
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var navController = findNavController();
         webview.webChromeClient = MyWebChormeCl(webview,pbar)
         webview.setWebViewClient(MyCustomWebViewClient());
         //webview.webChromeClient = WebChromeClient()
         webview.getSettings().setJavaScriptEnabled(true);
         webview.loadUrl(args.data.webUrl);
-
-
+        floating.setOnClickListener {
+            println("navController.currentDestination "+navController.currentDestination)
+            navController.navigate(NewsDetailFragmentDirections.actionNewsDetailFragmentToTestFragment())
+        }
     }
-
     class MyWebChormeCl(val webview:WebView,val pbar:ProgressBar) : WebChromeClient(){
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             super.onProgressChanged(view, newProgress)

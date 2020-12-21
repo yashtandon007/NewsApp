@@ -1,19 +1,26 @@
 package com.example.newsapp
 
+import android.util.Log
 import androidx.hilt.lifecycle.ViewModelInject
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import androidx.paging.PagingData
 import com.example.newsapp.data.NewsRepository
 import com.example.newsapp.data.dto.NewsItem
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class HomeViewModel @ViewModelInject constructor(val repo: NewsRepository): ViewModel() {
 
+    val myList = MutableLiveData<PagingData<NewsItem>>()
 
-    fun getNewsList(query:String): LiveData<PagingData<NewsItem>> {
-        var liveData = repo.getNewsStreamFlow(query).asLiveData()
-        return liveData
+    init{
+         viewModelScope.launch {
+             repo.getNewsStreamFlow("home").collect {
+                 myList.value = it
+             }
+         }
     }
+
+
 
 }

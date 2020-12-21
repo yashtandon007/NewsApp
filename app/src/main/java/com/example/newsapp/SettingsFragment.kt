@@ -5,14 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager.widget.ViewPager
+import androidx.preference.PreferenceManager
 import com.example.newsapp.util.ThemeHelper
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_viewpager.*
-import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.settings_fragment.*
 
 
@@ -29,13 +24,22 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+        val isDarkModeActive = sharedPreferences.getBoolean(ThemeHelper.DARK_MODE, false)
+        my_switch.isChecked = isDarkModeActive
+
         my_switch.setOnCheckedChangeListener{ _, isChecked->
+            val editor = sharedPreferences.edit()
                 if(isChecked){
                     ThemeHelper.applyTheme(ThemeHelper.DARK_MODE)
                 }else{
                     ThemeHelper.applyTheme(ThemeHelper.LIGHT_MODE)
                 }
+            editor.putBoolean(ThemeHelper.DARK_MODE,isChecked);
+            editor.apply();
+
         }
+
     }
 
 

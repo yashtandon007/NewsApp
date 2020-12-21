@@ -53,8 +53,8 @@
             <ProgressBar
                 android:id="@+id/pbar_bottom"
                 android:layout_marginVertical="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="17dp"
+                android:layout_height="17dp" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
