@@ -32,6 +32,7 @@ class ViewPagerFragment : Fragment() {
         // val mypager:ViewPager = view.findViewById(R.id.mypager)
         mypager.adapter = demoCollectionPagerAdapter
         tab_layout.setupWithViewPager(mypager)
+        //test
     }
 
     class DemoCollectionPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
