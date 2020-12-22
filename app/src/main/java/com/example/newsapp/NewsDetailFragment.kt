@@ -33,21 +33,21 @@ class NewsDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
         return FragmentNewsDetailBinding.inflate(LayoutInflater.from(context),container,false).root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        var navController = findNavController();
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        webview.getSettings().setJavaScriptEnabled(true);
         webview.webChromeClient = MyWebChormeCl(webview,pbar)
         webview.setWebViewClient(MyCustomWebViewClient());
-        //webview.webChromeClient = WebChromeClient()
-        webview.getSettings().setJavaScriptEnabled(true);
         webview.loadUrl(args.data.webUrl);
-        floating.setOnClickListener {
-            println("navController.currentDestination "+navController.currentDestination)
-            navController.navigate(NewsDetailFragmentDirections.actionNewsDetailFragmentToTestFragment())
+    }
+    class MyCustomWebViewClient : WebViewClient() {
+        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+            return if (Uri.parse(url).getHost()?.endsWith(url) == true) {
+                true
+            } else false
         }
     }
     class MyWebChormeCl(val webview:WebView,val pbar:ProgressBar) : WebChromeClient(){
@@ -60,26 +60,5 @@ class NewsDetailFragment : Fragment() {
             }
         }
     }
-}
 
-//class MyWebChromeClient: WebChromeClient() {
-//    override fun onProgressChanged(view: WebView?, newProgress: Int) {
-//        super.onProgressChanged(view, newProgress)
-//        view.setTitle("Loading, Please wait!");
-//        this.setProgress(progress * 100);
-//        if (progress == 100) {
-//            webview.setTitle(R.string.app_name);
-//        }
-//    }
-//}
-internal class MyCustomWebViewClient : WebViewClient() {
-
-
-
-
-    override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-        return if (Uri.parse(url).getHost()?.endsWith(url) == true) {
-            true
-        } else false
-    }
 }

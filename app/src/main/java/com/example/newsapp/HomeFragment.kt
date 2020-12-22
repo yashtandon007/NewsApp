@@ -24,6 +24,7 @@ import com.example.newsapp.adapter.NewsListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -53,7 +54,7 @@ class HomeFragment : Fragment() {
         animateCenterItem()
         viewLifecycleOwner.lifecycleScope.launch {
             adapterNews.loadStateFlow.collectLatest { loadStates ->
-                pbar_center.isVisible = loadStates.prepend is LoadState.Loading
+                pbar_center.isVisible = loadStates.refresh is LoadState.Loading
                 pbar_bottom.isVisible = loadStates.append is LoadState.Loading
             }
         }
@@ -88,11 +89,11 @@ class HomeFragment : Fragment() {
 
     private fun loadData() {
         arguments?.getString("query")?.let {
-            viewModel.myList.observe(viewLifecycleOwner, Observer {
-                GlobalScope.launch {
-                    adapterNews.submitData(it)
-                }
-            })
+            viewLifecycleOwner. lifecycleScope.launch {
+               viewModel.getData(it).collect {
+                   adapterNews.submitData(it)
+               }
+           }
         }
         swiperefresh.isRefreshing = false
     }

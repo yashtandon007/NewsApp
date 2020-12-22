@@ -66,12 +66,10 @@ class NewsListAdapter() : PagingDataAdapter<NewsItem, NewsListAdapter.NewsItemHo
                 )
             )
             holder.cardView.setOnClickListener {
-                holder.cardView.findNavController().navigate(ViewPagerFragmentDirections.actionViewPagerFragmentToTestFragment(
 
+                holder.cardView.findNavController().navigate(ViewPagerFragmentDirections.actionViewPagerFragmentToNewsdetail(
+                    currentNews
                 ))
-//                holder.cardView.findNavController().navigate(ViewPagerFragmentDirections.actionViewPagerFragmentToNewsdetail(
-//                    currentNews
-//                ))
 
 
             }
