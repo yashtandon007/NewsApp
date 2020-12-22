@@ -31,7 +31,7 @@ class ViewPagerFragment : Fragment() {
         demoCollectionPagerAdapter = DemoCollectionPagerAdapter(childFragmentManager)
         mypager.adapter = demoCollectionPagerAdapter
         tab_layout.setupWithViewPager(mypager)
-        //test
+        //test again
     }
 
     class DemoCollectionPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
