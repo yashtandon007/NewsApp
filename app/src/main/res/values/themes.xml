@@ -4,14 +4,22 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <item name="colorPrimaryDark">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorSecondary">@color/secondary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColor">?attr/colorOnBackground</item>
         <item name="windowActionBar">false</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/primaryDark</item>
+
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_light</item>
+    </style>
+    <style name="MainTheme" parent="Theme.NewsApp">
     </style>
 
     <style name="DateTextViewStyle">

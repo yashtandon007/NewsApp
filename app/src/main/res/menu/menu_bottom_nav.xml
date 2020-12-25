@@ -12,7 +12,7 @@
         android:title="Saved"
         app:showAsAction="always"
         android:orderInCategory="2"
-        android:icon="@drawable/ic_baseline_library_add_check_24"/>
+        android:icon="@drawable/ic_baseline_savings_24"/>
 
 
     <item android:id="@+id/settingsFragment"

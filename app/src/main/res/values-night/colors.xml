@@ -3,6 +3,7 @@
     <!-- app palette -->
     <color name="primary">#272727</color> <!-- Blue 300 -->
     <color name="colorOnPrimary">#ffffff</color> <!-- Blue 300 -->
+    <color name="primaryDark">#4C4C4C</color> <!-- Blue 700 -->
     <color name="secondary">#FFCC80</color> <!-- Orange 200 -->
     <color name="colorAccent">#Ef9A9A</color> <!-- Red 200 -->
 

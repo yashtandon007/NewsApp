@@ -28,7 +28,7 @@ class HomeViewModel @ViewModelInject constructor(val repo: NewsRepository,val ne
     }
 
     fun loadData(query: String): Flow<PagingData<NewsItem>> {
-        return repo.getNewsStreamFlow(query).cachedIn(viewModelScope)
+        return repo.getNewsStreamFlowFromDb(query).cachedIn(viewModelScope)
     }
 
 

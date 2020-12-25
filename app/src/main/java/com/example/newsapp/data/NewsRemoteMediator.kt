@@ -98,7 +98,6 @@ class NewsRemoteMediator(
                     RemoteKeys(repoId =it.id, prevKey = prevKey, nextKey = nextKey)
                 }
                 repoDatabase.remoteKeysDao().insertAll(keys)
-                Log.e("yashtandon", "load exception "+repos[1].id)
                 repoDatabase.newsDao().insertAll(repos)
 
             }
