@@ -10,10 +10,9 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class NewsItem(
     val apiUrl: String,
-    @PrimaryKey
+    @PrimaryKey()
     val id: String,
     val isHosted: Boolean,
-    val pillarId: String,
     val pillarName: String,
     val sectionId: String,
     val sectionName: String,

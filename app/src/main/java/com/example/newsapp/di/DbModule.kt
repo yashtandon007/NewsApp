@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.newsapp.api.NewsService
 import com.example.newsapp.data.AppDatabase
 import com.example.newsapp.data.entities.NewsDao
+import com.example.newsapp.data.entities.RemoteKeysDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,6 +26,11 @@ class DbModule {
     @Provides
     fun provideNewsDao(appDatabase: AppDatabase): NewsDao {
         return appDatabase.newsDao()
+    }
+
+    @Provides
+    fun provideRemoteKeysDao(appDatabase: AppDatabase): RemoteKeysDao {
+        return appDatabase.remoteKeysDao()
     }
 
 }

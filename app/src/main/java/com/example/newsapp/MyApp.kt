@@ -1,12 +1,13 @@
 package com.example.newsapp
 
 import android.app.Application
+import android.support.multidex.MultiDexApplication
 import androidx.preference.PreferenceManager
 import com.example.newsapp.util.ThemeHelper
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MyApp : Application() {
+class MyApp : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(applicationContext)

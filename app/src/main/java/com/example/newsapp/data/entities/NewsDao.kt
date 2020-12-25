@@ -1,6 +1,8 @@
 package com.example.newsapp.data.entities
 
 import androidx.lifecycle.LiveData
+import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -10,9 +12,9 @@ import com.example.newsapp.data.dto.NewsItem
 @Dao
 interface NewsDao {
     @Query("SELECT * FROM newsitem")
-    suspend fun getNews(): List<NewsItem>
+    fun getNews(): PagingSource<Int, NewsItem>
 
-//    @Query("SELECT * FROM plants WHERE growZoneNumber = :growZoneNumber ORDER BY name")
+    //    @Query("SELECT * FROM plants WHERE growZoneNumber = :growZoneNumber ORDER BY name")
 //    fun getPlantsWithGrowZoneNumber(growZoneNumber: Int): LiveData<List<Plant>>
 //
 //    @Query("SELECT * FROM plants WHERE id = :plantId")
@@ -20,4 +22,7 @@ interface NewsDao {
 //
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(newslist: List<NewsItem>)
+
+    @Query("DELETE FROM newsitem")
+    suspend fun clearNews()
 }

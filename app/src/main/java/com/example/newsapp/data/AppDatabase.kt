@@ -11,11 +11,15 @@ import com.example.newsapp.data.dto.Fields
 import com.example.newsapp.data.dto.NewsItem
 import com.example.newsapp.data.entities.NewsDao
 import com.example.newsapp.data.entities.NewsItemEntity
+import com.example.newsapp.data.entities.RemoteKeys
+import com.example.newsapp.data.entities.RemoteKeysDao
 
-@Database(entities = [NewsItem::class], version = 1, exportSchema = false)
+@Database(entities = [NewsItem::class, RemoteKeys::class], version = 3, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun newsDao(): NewsDao
+    abstract fun remoteKeysDao(): RemoteKeysDao
+
     companion object {
 
         // For Singleton instantiation

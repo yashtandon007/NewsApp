@@ -5,9 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
-
 @Parcelize
 data class Fields(
-    val trailText: String,
+   val trailText: String,
     val thumbnail: String
 ): Parcelable

@@ -6,25 +6,44 @@
 
     </data>
 
+ <FrameLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+
+     >
+
+
+
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:tabSelectedTextColor="@color/colorAccent"
+        android:orientation="vertical"
+        >
+
+        <include
+            layout="@layout/my_toolbar" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:labelVisibilityMode="auto"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             app:tabBackground="@color/primary"
             app:tabGravity="center"
             app:tabMode="scrollable"
-            app:labelVisibilityMode="auto"
-            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
-            app:tabSelectedTextColor="@color/colorAccent" />
+              />
 
-        <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/mypager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            />
     </LinearLayout>
+
+     <include layout="@layout/my_progresbar" />
+ </FrameLayout>
+
 </layout>

@@ -18,16 +18,19 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.plusAssign
+import androidx.navigation.ui.setupWithNavController
 import com.example.newsapp.databinding.FragmentNewsDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_news_detail.*
+import kotlinx.android.synthetic.main.my_progresbar.*
+import kotlinx.android.synthetic.main.my_toolbar.*
 
 @AndroidEntryPoint
 class NewsDetailFragment : Fragment() {
 
     private val args: NewsDetailFragmentArgs by navArgs()
-
+    private var mainActivity: MainActivity? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,6 +41,11 @@ class NewsDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val navController = findNavController()
+        mainActivity = activity as MainActivity?
+        toolbar
+            .setupWithNavController(navController, mainActivity?.appBarConfiguration!!)
+
         webview.getSettings().setJavaScriptEnabled(true);
         webview.webChromeClient = MyWebChormeCl(webview,pbar)
         webview.setWebViewClient(MyCustomWebViewClient());

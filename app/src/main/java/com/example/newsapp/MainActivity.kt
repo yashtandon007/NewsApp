@@ -27,7 +27,7 @@ import androidx.navigation.plusAssign
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    lateinit var appBarConfiguration:AppBarConfiguration
+    public lateinit var appBarConfiguration:AppBarConfiguration
     lateinit var navController:NavController;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         navController = my_nav_host_fragment.findNavController()
         appBarConfiguration = AppBarConfiguration(setOf(R.id.viewPagerFragment,R.id.offlineFragment,R.id.settingsFragment),drawer_layout)
-        toolbar.setupWithNavController(navController,appBarConfiguration)
+        //toolbar.setupWithNavController(navController,appBarConfiguration)
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.viewPagerFragment -> showBottomNav()

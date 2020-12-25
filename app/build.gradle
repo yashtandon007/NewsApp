@@ -6,14 +6,16 @@ apply plugin: 'dagger.hilt.android.plugin'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
+
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
     buildFeatures {
         dataBinding = true
     }
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.example.newsapp"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -84,6 +86,9 @@ dependencies {
     androidTestImplementation "com.google.truth:truth:$rootProject.truthVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.hiltVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
+    implementation 'com.android.support:multidex:1.0.3'
+
+
 }
 
 def getUnsplashAccess() {
